@@ -1,0 +1,7 @@
+{
+  "name": "lifepredictor",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
