@@ -8,14 +8,123 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ng-container [ngSwitch]="folder">
+    <div *ngSwitchCase="'home'" class="centered">
+      
+      <!-- Contenido específico para 'drafts' -->
+      <ion-title>¡Bienvenido!</ion-title> 
+      <div style="height: 70%;" *ngIf="!statistics.stadisticsStatus.preguntasplandiarioanswered || !statistics.stadisticsStatus.preguntasvitalesanswered">
+     
+        <ion-title>   
+          <ion-icon  name="warning-outline"></ion-icon>        
+           No haz configurado tus parametros</ion-title>
+       Ve a:
+          <p [routerLink]="vitalsUrl" *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered " class="link">-Ajustes vitales</p>
+              <p [routerLink]="dailyUrl" *ngIf="statistics.stadisticsStatus.preguntasplandiarioanswered " class="link">-Plan diario</p>
+       y responde las preguntas.
+       
+      </div>
+      <div style="height: 70%;" *ngIf="statistics.stadisticsStatus.preguntasplandiarioanswered && statistics.stadisticsStatus.preguntasvitalesanswered">
+      
+      <label >Tienes <h1 style="color:#2f3 ;">{{ statistics.posibilidadesDeVivir+"%"}}</h1> de probabilidades de vivir hoy y un 
+        <h1  style="color: #f20;">{{ statistics.posibilidadesDeMorir+"%"}}</h1>
+        de  probabilidades de morir hoy
+      </label>
+      
+        <ion-title style="margin-top: 15%;">   
+           Recuerda modificar diariamente tu               <p [routerLink]="dailyUrl" *ngIf="statistics.stadisticsStatus.preguntasplandiarioanswered " class="link">Plan diario</p>
+         para calcular tus probabilidades de vivir y morir hoy.
+          </ion-title>
+   
+      </div>
+       
+       </div>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+
+       <div *ngSwitchCase="'daily'" class="centered">
+        <ion-title>Ajusta tus hábitos de hoy</ion-title>
+      
+        <!-- Recorremos las preguntas -->
+        <div *ngFor="let pregunta of preguntasPlanDiario">
+          <h3>{{ pregunta.pregunta }}</h3>
+      
+          <!-- Recorremos las respuestas de cada pregunta -->
+          <div class="respuestas-container">
+            
+              <ion-button
+              *ngFor="let respuesta of pregunta.respuestas"
+              (click)="setRespuestaPreguntasPlanDiario(pregunta.pregunta, respuesta.respuesta)"
+              [color]="pregunta.respuesta === respuesta.respuesta ? 'success' : 'medium'"
+            >
+        
+              {{ respuesta.respuesta }}
+            </ion-button>
+     
+           
+          </div>
+        </div>
+      </div>
+
+
+    <div *ngSwitchCase="'vitals'" class="centered">
+      <ion-title>Ajusta tus parametros de vida </ion-title> 
+   
+        <ion-label>¿Qué edad tienes?</ion-label>
+        <ion-label *ngIf="edad===null">(no haz escogido una edad)</ion-label>
+        <ion-label *ngIf="edad!==null">(edad escogida: {{edad}} años)</ion-label>
+        <ion-select placeholder="Selecciona tu edad" (ionChange)="onEdadChange($event)" >
+          <ion-select-option *ngFor="let edad of statistics.edades.respuestas" [value]="edad.respuesta"  >
+            {{ edad.respuesta }} años
+          </ion-select-option>
+        </ion-select>
+
+
+        <ion-label>¿En que país vives?</ion-label>
+        <ion-label *ngIf="pais===null">(no haz escogido un pais)</ion-label>
+        <ion-label *ngIf="pais!==null">(pais escogido: {{pais}})</ion-label>
+        <ion-select placeholder="Selecciona tu país" (ionChange)="onPaisChange($event)" >
+          <ion-select-option *ngFor="let paises of statistics.preguntasPaisVida.respuestas" [value]="paises.respuesta"  >
+            {{ paises.respuesta }} 
+          </ion-select-option>
+        </ion-select>
+
+    
+      <!-- Selección de Enfermedades -->
+      <ion-list>
+        <ion-list-header>
+          <ion-label>¿Tienes alguna de estas enfermedades?</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let enfermedad of statistics.preguntasEnfermedad.respuestas">
+          <ion-checkbox
+            slot="start"
+            [checked]="enfermedad.selected===true"
+            (ionChange)="onEnfermedadChange(enfermedad.respuesta, $event)">
+          </ion-checkbox>
+          <ion-label>{{ enfermedad.respuesta }}</ion-label>
+        </ion-item>
+      </ion-list>
+      <div *ngFor="let pregunta of preguntasVitales">
+        <h3>{{ pregunta.pregunta }}</h3>
+    
+        <!-- Recorremos las respuestas de cada pregunta -->
+        <div class="respuestas-container">
+          
+            <ion-button
+            *ngFor="let respuesta of pregunta.respuestas"
+            (click)="setRespuestaPreguntasVitales(pregunta.pregunta, respuesta.respuesta)"
+            [color]="pregunta.respuesta === respuesta.respuesta ? 'success' : 'medium'"
+          >
+            {{ respuesta.respuesta }}
+          </ion-button>
+   
+         
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngSwitchDefault>
+      <p>¿Te has perdido?</p>
+    </div>
+  </ng-container>
 </ion-content>

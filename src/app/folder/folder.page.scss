@@ -1,7 +1,10 @@
 ion-menu-button {
   color: var(--ion-color-primary);
 }
-
+.link{
+  text-decoration:underline;
+  cursor: pointer;
+  }
 #container {
   text-align: center;
   position: absolute;
@@ -10,7 +13,15 @@ ion-menu-button {
   top: 50%;
   transform: translateY(-50%);
 }
-
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content:center ;
+  flex-direction: column ;
+  height: 100%; /* Ajusta la altura al tamaño completo de la pantalla */
+  width: 100%;
+  text-align: center; /* Opcional: centra el texto */
+}
 #container strong {
   font-size: 20px;
   line-height: 26px;

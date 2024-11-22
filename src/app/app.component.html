@@ -3,8 +3,54 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
+          <ion-card color="warning" *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == false || statistics.stadisticsStatus.preguntasplandiarioanswered == false">
+            <ion-card-header>
+          
+              <ion-card-title>   
+                <ion-icon  name="warning-outline"></ion-icon>        
+                 No haz configurado tus parametros</ion-card-title>
+              <ion-card-subtitle>Ve a:
+                <p [routerLink]="vitalsUrl" *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == false" class="link">-Ajustes vitales</p>
+                    <p [routerLink]="dailyUrl" *ngIf="statistics.stadisticsStatus.preguntasplandiarioanswered == false" class="link">-Plan diario</p>
+             y responde las preguntas.
+             </ion-card-subtitle>
+
+
+
+
+            </ion-card-header>
+          
+            <ion-card-content> Al llenar los parametros necesarios, verás tu esperanza de vida y tus probabilidades de vivir y morir hoy aquí</ion-card-content>
+          </ion-card>
+ 
+          <ion-list-header>ESTADISTICAS:</ion-list-header>
+          <ion-list-header  
+                 *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+          >probabilidades de vivir hoy: </ion-list-header>   
+
+          <ion-list-header   style="color: #2f3;"
+          *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+           >{{ statistics.posibilidadesDeVivir+"%"}}</ion-list-header>
+          <ion-list-header
+          *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+
+          >probabilidades de morir hoy: </ion-list-header>   
+   
+          <ion-list-header style="color: #f20;"
+          *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+
+          >{{statistics.posibilidadesDeMorir+"%"}}</ion-list-header>   
+          <ion-list-header
+          *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+
+          >Esperanza de vida: </ion-list-header>   
+          <ion-list-header style="color: rgb(238, 0, 255);"
+          *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+
+          >{{statistics.esperanzaDeVida}}</ion-list-header>           
+      
+
+          <ion-list-header>Parámetros:</ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -12,15 +58,8 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
 
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
+          
         </ion-list>
       </ion-content>
     </ion-menu>
