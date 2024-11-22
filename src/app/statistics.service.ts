@@ -380,7 +380,6 @@ if (object && object.selected !== undefined) {
   await this.storage.setPreguntaPlanDiario(object)
   }
   public cargarRespuestas(): Promise<{ preguntasplandiario: any; preguntasvitales: any ,edad:any,enfermedades:any,pais:any}> {
- this.storage.clear()
     return new Promise(async (resolve, reject) => {
       try {
         
