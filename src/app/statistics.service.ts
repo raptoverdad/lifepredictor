@@ -432,6 +432,8 @@ if (object && object.selected !== undefined) {
           return preguntaEncontrada ? preguntaEncontrada : preguntaLocal;
         });
       if(preguntasEncontradas==0)   this.stadisticsStatus.preguntasplandiarioanswered=false
+      if(preguntasEncontradas==14)   this.stadisticsStatus.preguntasplandiarioanswered=true
+      console.log("PREGUNTAS ENCONTRADAS: ",preguntasEncontradas)
         this.preguntasEnfermedad.respuestas = this.preguntasEnfermedad.respuestas.map((preguntaLocal: any) => {
           const preguntaEncontrada = enfermedades.find(
             (preguntaStorage: any) => preguntaStorage.respuesta === preguntaLocal.respuesta
