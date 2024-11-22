@@ -6,6 +6,7 @@ export const routes: Routes = [
     redirectTo: 'folder/home',
     pathMatch: 'full',
   },
+  
   {
     path: 'folder/:id',
     loadComponent: () =>
