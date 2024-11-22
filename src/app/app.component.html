@@ -23,7 +23,8 @@
             <ion-card-content> Al llenar los parametros necesarios, verás tu esperanza de vida y tus probabilidades de vivir y morir hoy aquí</ion-card-content>
           </ion-card>
  
-          <ion-list-header>ESTADISTICAS:</ion-list-header>
+          <ion-list-header *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
+          >ESTADISTICAS:</ion-list-header>
           <ion-list-header  
                  *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered == true && statistics.stadisticsStatus.preguntasplandiarioanswered == true"
           >probabilidades de vivir hoy: </ion-list-header>   

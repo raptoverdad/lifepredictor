@@ -380,9 +380,10 @@ if (object && object.selected !== undefined) {
   await this.storage.setPreguntaPlanDiario(object)
   }
   public cargarRespuestas(): Promise<{ preguntasplandiario: any; preguntasvitales: any ,edad:any,enfermedades:any,pais:any}> {
+ this.storage.clear()
     return new Promise(async (resolve, reject) => {
       try {
-        this.esperanzaDeVida=false
+        
         // Obtener preguntas desde el Storage
         const preguntasVitalesStorage =await (await this.storage.getItem("preguntasvitales")) || [];
         console.log("PREGUNTAS VITALES: ",preguntasVitalesStorage);
@@ -414,9 +415,10 @@ if (object && object.selected !== undefined) {
           }
           return preguntaEncontrada ? preguntaEncontrada : preguntaLocal;
         });
-  
+        let preguntasEncontradas=0
         // Recorrer y actualizar preguntasPlanDiario
         this.preguntasPlanDiario = this.preguntasPlanDiario.map((preguntaLocal: any) => {
+
           const preguntaEncontrada = preguntasPlanDiarioStorage.find(
             (preguntaStorage: any) => preguntaStorage.pregunta === preguntaLocal.pregunta
           );
@@ -425,10 +427,12 @@ if (object && object.selected !== undefined) {
             this.stadisticsStatus.preguntasplandiarioanswered=false
             console.log("pregunta no respondida:",preguntaEncontrada)
           }
+        }else{
+          preguntasEncontradas++
         }
           return preguntaEncontrada ? preguntaEncontrada : preguntaLocal;
         });
-      
+      if(preguntasEncontradas==0)   this.stadisticsStatus.preguntasplandiarioanswered=false
         this.preguntasEnfermedad.respuestas = this.preguntasEnfermedad.respuestas.map((preguntaLocal: any) => {
           const preguntaEncontrada = enfermedades.find(
             (preguntaStorage: any) => preguntaStorage.respuesta === preguntaLocal.respuesta

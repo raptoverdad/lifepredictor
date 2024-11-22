@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true">
   <ng-container [ngSwitch]="folder">
-    <div *ngSwitchCase="'home'" class="centered">
+    <div *ngSwitchCase="'home'" class="centeredHome">
       
       <!-- Contenido específico para 'drafts' -->
       <ion-title>¡Bienvenido!</ion-title> 
@@ -19,8 +19,8 @@
           <ion-icon  name="warning-outline"></ion-icon>        
            No haz configurado tus parametros</ion-title>
        Ve a:
-          <p [routerLink]="vitalsUrl" *ngIf="statistics.stadisticsStatus.preguntasvitalesanswered " class="link">-Ajustes vitales</p>
-              <p [routerLink]="dailyUrl" *ngIf="statistics.stadisticsStatus.preguntasplandiarioanswered " class="link">-Plan diario</p>
+          <p [routerLink]="vitalsUrl" *ngIf="!statistics.stadisticsStatus.preguntasvitalesanswered " class="link">-Ajustes vitales</p>
+              <p [routerLink]="dailyUrl" *ngIf="!statistics.stadisticsStatus.preguntasplandiarioanswered " class="link">-Plan diario</p>
        y responde las preguntas.
        
       </div>

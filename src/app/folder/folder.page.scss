@@ -14,6 +14,12 @@ ion-menu-button {
   transform: translateY(-50%);
 }
 .centered {
+
+  height: 100%; /* Ajusta la altura al tamaño completo de la pantalla */
+  width: 100%;
+  text-align: center; /* Opcional: centra el texto */
+}
+.centeredHome {
   display: flex;
   align-items: center;
   justify-content:center ;
