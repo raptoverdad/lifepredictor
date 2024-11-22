@@ -221,8 +221,6 @@ export class StatisticsService {
         { respuesta: "Tal vez", porcentaje: 15 },
         { respuesta: "No", porcentaje: 0 }
       ]
-      ,
-        respuesta:"Sí"
     },
     {
       pregunta: "¿Participarás en algún deporte extremo o de riesgo, como escalada, paracaidismo o surf?",
@@ -402,6 +400,7 @@ if (object && object.selected !== undefined) {
         this.edadSeleccionada=edad
         this.paisSeleccionado=pais
         // Recorrer y actualizar preguntasVitales
+        let preguntasVitalesEncontradas=0
         this.preguntasVitales = this.preguntasVitales.map((preguntaLocal: any) => {
           const preguntaEncontrada = preguntasVitalesStorage.find(
             (preguntaStorage: any) => preguntaStorage.pregunta === preguntaLocal.pregunta
@@ -411,9 +410,20 @@ if (object && object.selected !== undefined) {
               this.stadisticsStatus.preguntasvitalesanswered=false
               console.log("pregunta no respondida:",preguntaEncontrada)
             }
+          }else{
+            preguntasVitalesEncontradas++
           }
           return preguntaEncontrada ? preguntaEncontrada : preguntaLocal;
         });
+console.log("PREGUNTAS VITALES ENCONTRADAS: ",preguntasVitalesEncontradas)
+        if(edad!=null && preguntasVitalesEncontradas==7 && pais != null){
+          console.log("PREGUNTAS VITALES ANSWERED!!!!!")
+          this.stadisticsStatus.preguntasvitalesanswered=true
+        }else{
+          console.log("PREGUNTAS VITALES NOT ANSWERED!!!!!")
+
+        }
+
         let preguntasEncontradas=0
         // Recorrer y actualizar preguntasPlanDiario
         this.preguntasPlanDiario = this.preguntasPlanDiario.map((preguntaLocal: any) => {
